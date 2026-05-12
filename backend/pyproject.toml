@@ -10,11 +10,18 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "fastapi",
+    "inngest",
+    "langchain-text-splitters",
+    "openai",
     "pydantic-settings",
+    "pymupdf",
     "psycopg2-binary",
+    "python-multipart",
+    "qdrant-client",
     "sqlalchemy",
     "slowapi",
     "structlog",
+    "tenacity",
     "uvicorn[standard]",
 ]
 

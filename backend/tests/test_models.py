@@ -3,7 +3,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.auth.hashing import hash_api_key
-from app.db.models import ApiKey, UsageLog, User
+from app.db.models import ApiKey, Document, UsageLog, User
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -198,3 +198,25 @@ def test_deleting_user_cascades_to_api_keys_and_usage_logs(db_session: Session) 
 
     assert db_session.get(ApiKey, key_id) is None
     assert db_session.get(UsageLog, log_id) is None
+
+
+def test_document_defaults_and_relationship(db_session: Session) -> None:
+    user = _make_user(db_session, "doc_owner@test.com")
+    document = Document(
+        user_id=user.id,
+        original_filename="paper.pdf",
+        filename="uuid-paper.pdf",
+        file_path="/tmp/uuid-paper.pdf",
+        file_size=12345,
+        status="pending",
+    )
+    db_session.add(document)
+    db_session.commit()
+    db_session.refresh(document)
+    db_session.refresh(user)
+
+    assert document.id is not None
+    assert document.created_at is not None
+    assert document.user_id == user.id
+    assert len(user.documents) == 1
+    assert user.documents[0].id == document.id
