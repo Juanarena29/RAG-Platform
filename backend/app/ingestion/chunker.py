@@ -17,12 +17,12 @@ def chunk_pages(
     document_id: int,
     pages: list[PageContent],
     chunk_size: int = 2000,
-    chunk_overlap: int = 100,
+    chunk_overlap: int = 200,
 ) -> list[Chunk]:
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap,
-        separators=["\n\n", "\n", ". ", " "],
+        separators=["\n\n", "\n", ". ", " ", ""],
     )
 
     chunks: list[Chunk] = []

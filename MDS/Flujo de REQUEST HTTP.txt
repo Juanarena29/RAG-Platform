@@ -1,0 +1,24 @@
+flowchart TB
+    A(["Cliente HTTP"]) -- Authorization: Bearer --> B["FastAPI / Uvicorn"]
+    B --> C{"Middleware CORS"}
+    C -- Origen no permitido --> ERR1(["❌ 403 Forbidden"])
+    C -- Origen permitido --> D{"Rate Limiter\nSlowAPI"}
+    D -- Límite superado\n60 req/min --> ERR2(["❌ 429 Too Many Requests"])
+    D -- Dentro del límite --> E{"¿Ruta?"}
+    E -- GET /health --> F["health.py\nRouter público"]
+    F --> OK1(["✅ 200 OK\njson: status ok"])
+    E -- GET /me --> G["deps.py\nget_current_user"]
+    G --> H{"¿Header Authorization\npresente y formato Bearer?"}
+    H -- No --> ERR3(["❌ 401 Unauthorized"])
+    H -- Sí --> I["auth/hashing.py\nSHA-256 de la key"]
+    I --> J["db/repositories.py\nBusca hash en api_keys"]
+    J --> K{"¿Hash activo\ny user activo?"}
+    K -- No --> ERR4(["❌ 401 Unauthorized"])
+    K -- Sí --> L["Retorna objeto User"]
+    L --> M["Endpoint /me\nRetorna id + email"]
+    M --> OK2(["✅ 200 OK\njson: id, email"])
+    E -- Ruta desconocida --> ERR5(["❌ 404 Not Found"])
+    B -- Excepción no controlada --> ERR6["core/exceptions.py\nHandler global"]
+    ERR6 --> ERR7(["❌ 500 Internal Server Error\nsin detalle interno"])
+
+    
