@@ -30,7 +30,7 @@ def parse_pdf(content: bytes) -> list[PageContent]:
     pages: list[PageContent] = []
     try:
         for page_index, page in enumerate(doc):
-            text = _clean_text(page.get_text("text"))
+            text = _clean_text(page.get_text("text", sort=True))
             if text:
                 pages.append(PageContent(page_number=page_index, text=text))
     finally:
