@@ -1,1 +1,112 @@
 @import "tailwindcss";
+@import "./styles/design-tokens.css";
+
+@theme {
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+
+  --color-background: var(--color-background);
+  --color-foreground: var(--color-foreground);
+  --color-muted-foreground: var(--color-muted-foreground);
+  --color-primary: var(--color-primary);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-primary-foreground: var(--color-primary-foreground);
+  --color-accent: var(--color-accent);
+  --color-surface: var(--color-surface);
+  --color-surface-elevated: var(--color-surface-elevated);
+  --color-border: var(--color-border);
+  --color-border-subtle: var(--color-border-subtle);
+  --color-ring: var(--color-ring);
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+  --color-destructive: var(--color-destructive);
+  --color-glow: var(--color-glow);
+  --color-chat-user-bg: var(--chat-user-bg);
+  --color-chat-assistant-bg: var(--chat-assistant-bg);
+  --color-chat-citation-bg: var(--chat-citation-bg);
+  --color-chat-citation-fg: var(--chat-citation-fg);
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, var(--color-indigo-400) 0%, var(--color-violet-500) 50%, var(--color-indigo-400) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .bg-mesh {
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, color-mix(in srgb, var(--color-indigo-500) 25%, transparent), transparent),
+      radial-gradient(ellipse 60% 40% at 100% 0%, color-mix(in srgb, var(--color-violet-500) 15%, transparent), transparent),
+      radial-gradient(ellipse 50% 30% at 0% 100%, color-mix(in srgb, var(--color-indigo-600) 12%, transparent), transparent);
+  }
+
+  .glass {
+    background: color-mix(in srgb, var(--color-surface) 70%, transparent);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--color-border-subtle);
+  }
+
+  .glow-button {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--color-indigo-400) 40%, transparent),
+      0 4px 24px var(--color-glow);
+  }
+
+  .glow-button:hover {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--color-indigo-400) 60%, transparent),
+      0 8px 32px color-mix(in srgb, var(--color-indigo-500) 45%, transparent);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
