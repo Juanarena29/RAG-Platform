@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowLeft, Sparkles } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 import { checkHealth, getDocuments } from '../api.js'
 import ChatPanel from '../components/ChatPanel.jsx'
 import UploadPanel from '../components/UploadPanel.jsx'
@@ -38,8 +38,8 @@ export default function ChatPage() {
   const hasCompletedDocs = documents.some((doc) => doc.status === 'completed')
 
   return (
-    <div className="flex min-h-screen flex-col bg-background bg-mesh">
-      <header className="sticky top-0 z-20 border-b border-border-subtle glass">
+    <div className="flex h-dvh flex-col overflow-hidden bg-background">
+      <header className="shrink-0 border-b border-border-subtle bg-surface">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
           <div className="flex items-center gap-4">
             <Link
@@ -50,12 +50,7 @@ export default function ChatPage() {
               <ArrowLeft className="h-4 w-4" aria-hidden="true" />
               <span className="hidden sm:inline">Inicio</span>
             </Link>
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/15 ring-1 ring-primary/25">
-                <Sparkles className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
-              </div>
-              <h1 className="font-heading text-lg font-semibold text-foreground">RAG Platform</h1>
-            </div>
+            <h1 className="font-heading text-base font-medium text-foreground">Chat</h1>
           </div>
           <span
             className={`rounded-full px-3 py-1 text-xs font-medium ring-1 ${
@@ -67,16 +62,16 @@ export default function ChatPage() {
             }`}
           >
             {backendStatus === 'online'
-              ? 'Backend online'
+              ? 'Online'
               : backendStatus === 'offline'
-                ? 'Backend offline'
-                : 'Verificando...'}
+                ? 'Offline'
+                : 'Checking...'}
           </span>
         </div>
       </header>
 
-      <main className="mx-auto grid w-full max-w-7xl flex-1 gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(280px,30%)_1fr]">
-        <aside className="space-y-4">
+      <main className="mx-auto grid w-full max-w-7xl flex-1 min-h-0 gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(260px,28%)_1fr]">
+        <aside className="flex min-h-0 flex-col gap-4 overflow-y-auto chat-scrollbar lg:max-h-full">
           <div className="rounded-[var(--card-radius)] border border-border bg-surface p-4">
             <UploadPanel documents={documents} onDocumentReady={loadDocuments} />
           </div>
@@ -90,7 +85,7 @@ export default function ChatPage() {
           )}
         </aside>
 
-        <section className="min-h-[32rem]">
+        <section className="flex min-h-0 flex-1 flex-col">
           <ChatPanel hasCompletedDocs={hasCompletedDocs} />
         </section>
       </main>

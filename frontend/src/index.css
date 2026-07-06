@@ -21,7 +21,6 @@
   --color-success: var(--color-success);
   --color-warning: var(--color-warning);
   --color-destructive: var(--color-destructive);
-  --color-glow: var(--color-glow);
   --color-chat-user-bg: var(--chat-user-bg);
   --color-chat-assistant-bg: var(--chat-assistant-bg);
   --color-chat-citation-bg: var(--chat-citation-bg);
@@ -47,66 +46,32 @@
   h4 {
     font-family: var(--font-heading);
   }
+
+  #root {
+    min-height: 100dvh;
+  }
 }
 
 @layer utilities {
-  .text-gradient {
-    background: linear-gradient(135deg, var(--color-indigo-400) 0%, var(--color-violet-500) 50%, var(--color-indigo-400) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  .chat-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--chat-scrollbar-thumb) var(--chat-scrollbar-track);
   }
 
-  .bg-mesh {
-    background-image:
-      radial-gradient(ellipse 80% 50% at 50% -20%, color-mix(in srgb, var(--color-indigo-500) 25%, transparent), transparent),
-      radial-gradient(ellipse 60% 40% at 100% 0%, color-mix(in srgb, var(--color-violet-500) 15%, transparent), transparent),
-      radial-gradient(ellipse 50% 30% at 0% 100%, color-mix(in srgb, var(--color-indigo-600) 12%, transparent), transparent);
+  .chat-scrollbar::-webkit-scrollbar {
+    width: 6px;
   }
 
-  .glass {
-    background: color-mix(in srgb, var(--color-surface) 70%, transparent);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--color-border-subtle);
+  .chat-scrollbar::-webkit-scrollbar-track {
+    background: var(--chat-scrollbar-track);
   }
 
-  .glow-button {
-    box-shadow:
-      0 0 0 1px color-mix(in srgb, var(--color-indigo-400) 40%, transparent),
-      0 4px 24px var(--color-glow);
+  .chat-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--chat-scrollbar-thumb);
+    border-radius: var(--radius-full);
   }
 
-  .glow-button:hover {
-    box-shadow:
-      0 0 0 1px color-mix(in srgb, var(--color-indigo-400) 60%, transparent),
-      0 8px 32px color-mix(in srgb, var(--color-indigo-500) 45%, transparent);
+  .chat-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--color-zinc-600);
   }
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
-@keyframes pulse-glow {
-  0%,
-  100% {
-    opacity: 0.4;
-  }
-  50% {
-    opacity: 0.7;
-  }
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 4s ease-in-out infinite;
 }
