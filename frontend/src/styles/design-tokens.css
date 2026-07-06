@@ -1,0 +1,94 @@
+/* RAG Platform — Dark theme design tokens (primitive → semantic → component) */
+
+:root {
+  /* Primitive — color */
+  --color-zinc-950: #09090b;
+  --color-zinc-900: #18181b;
+  --color-zinc-800: #27272a;
+  --color-zinc-700: #3f3f46;
+  --color-zinc-600: #52525b;
+  --color-zinc-500: #71717a;
+  --color-zinc-400: #a1a1aa;
+  --color-zinc-300: #d4d4d8;
+  --color-zinc-100: #f4f4f5;
+  --color-zinc-50: #fafafa;
+
+  --color-indigo-500: #6366f1;
+  --color-indigo-400: #818cf8;
+  --color-indigo-600: #4f46e5;
+  --color-violet-500: #8b5cf6;
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;
+  --color-red-400: #f87171;
+  --color-red-500: #ef4444;
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e0b;
+  --color-sky-400: #38bdf8;
+
+  /* Primitive — spacing */
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+
+  /* Primitive — radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
+  --radius-full: 9999px;
+
+  /* Primitive — typography */
+  --font-heading: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Semantic — dark theme (default) */
+  --color-background: var(--color-zinc-950);
+  --color-foreground: var(--color-zinc-50);
+  --color-muted-foreground: var(--color-zinc-400);
+  --color-primary: var(--color-indigo-500);
+  --color-primary-hover: var(--color-indigo-400);
+  --color-primary-foreground: var(--color-zinc-50);
+  --color-accent: var(--color-violet-500);
+  --color-surface: var(--color-zinc-900);
+  --color-surface-elevated: var(--color-zinc-800);
+  --color-border: color-mix(in srgb, var(--color-zinc-700) 60%, transparent);
+  --color-border-subtle: color-mix(in srgb, var(--color-zinc-700) 30%, transparent);
+  --color-ring: var(--color-indigo-400);
+  --color-success: var(--color-emerald-400);
+  --color-warning: var(--color-amber-400);
+  --color-destructive: var(--color-red-400);
+  --color-glow: color-mix(in srgb, var(--color-indigo-500) 35%, transparent);
+
+  /* Component — button */
+  --button-bg: var(--color-primary);
+  --button-fg: var(--color-primary-foreground);
+  --button-hover-bg: var(--color-primary-hover);
+  --button-radius: var(--radius-lg);
+  --button-padding-x: var(--spacing-6);
+  --button-padding-y: var(--spacing-3);
+
+  /* Component — card */
+  --card-bg: var(--color-surface);
+  --card-border: var(--color-border);
+  --card-radius: var(--radius-xl);
+  --card-padding: var(--spacing-6);
+
+  /* Component — input */
+  --input-bg: var(--color-surface);
+  --input-border: var(--color-border);
+  --input-focus-ring: var(--color-ring);
+  --input-radius: var(--radius-lg);
+
+  /* Component — chat */
+  --chat-user-bg: var(--color-surface-elevated);
+  --chat-assistant-bg: var(--color-surface);
+  --chat-citation-bg: color-mix(in srgb, var(--color-indigo-500) 20%, transparent);
+  --chat-citation-fg: var(--color-indigo-400);
+}

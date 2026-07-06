@@ -41,7 +41,9 @@ export default function FeedbackButtons({ traceId, onFeedbackSent }) {
           disabled={sent || loading}
           aria-label="Feedback positivo"
           className={`rounded p-1.5 transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
-            feedback === 'positive' ? 'text-green-600' : 'text-gray-400 hover:text-gray-600'
+            feedback === 'positive'
+              ? 'text-success'
+              : 'text-muted-foreground hover:text-foreground'
           }`}
         >
           <ThumbsUp className="h-4 w-4" />
@@ -52,13 +54,15 @@ export default function FeedbackButtons({ traceId, onFeedbackSent }) {
           disabled={sent || loading}
           aria-label="Feedback negativo"
           className={`rounded p-1.5 transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
-            feedback === 'negative' ? 'text-red-500' : 'text-gray-400 hover:text-gray-600'
+            feedback === 'negative'
+              ? 'text-destructive'
+              : 'text-muted-foreground hover:text-foreground'
           }`}
         >
           <ThumbsDown className="h-4 w-4" />
         </button>
       </div>
-      {error && <p className="mt-1 text-xs text-red-400">{error}</p>}
+      {error && <p className="mt-1 text-xs text-destructive">{error}</p>}
     </div>
   )
 }

@@ -3,10 +3,10 @@ import { CheckCircle2, Loader2 } from 'lucide-react'
 import { getDocuments, uploadDocument } from '../api.js'
 
 const STATUS_STYLES = {
-  pending: 'bg-yellow-100 text-yellow-800',
-  processing: 'bg-blue-100 text-blue-800',
-  completed: 'bg-green-100 text-green-800',
-  failed: 'bg-red-100 text-red-800',
+  pending: 'bg-warning/15 text-warning ring-warning/25',
+  processing: 'bg-primary/15 text-primary ring-primary/25',
+  completed: 'bg-success/15 text-success ring-success/25',
+  failed: 'bg-destructive/15 text-destructive ring-destructive/25',
 }
 
 const STATUS_LABELS = {
@@ -132,12 +132,12 @@ export default function UploadPanel({ documents, onDocumentReady }) {
   }
 
   const dropZoneClasses = {
-    idle: 'border-dashed border-gray-300 bg-white text-gray-500 hover:border-gray-400',
-    dragging: 'border-blue-400 bg-blue-50 text-blue-700',
-    uploading: 'border-blue-300 bg-blue-50 text-blue-700',
-    processing: 'border-blue-300 bg-blue-50 text-blue-700',
-    done: 'border-green-300 bg-green-50 text-green-700',
-    error: 'border-red-300 bg-red-50 text-red-600',
+    idle: 'border-dashed border-border bg-surface-elevated/50 text-muted-foreground hover:border-primary/40 hover:text-foreground',
+    dragging: 'border-primary bg-primary/10 text-primary',
+    uploading: 'border-primary/50 bg-primary/10 text-primary',
+    processing: 'border-primary/50 bg-primary/10 text-primary',
+    done: 'border-success/50 bg-success/10 text-success',
+    error: 'border-destructive/50 bg-destructive/10 text-destructive',
   }
 
   return (
@@ -184,7 +184,7 @@ export default function UploadPanel({ documents, onDocumentReady }) {
 
         {panelState === 'done' && (
           <div className="flex flex-col items-center gap-2">
-            <CheckCircle2 className="h-6 w-6 text-green-600" aria-hidden="true" />
+            <CheckCircle2 className="h-6 w-6 text-success" aria-hidden="true" />
             <p className="text-sm font-medium">{uploadedFilename}</p>
           </div>
         )}
@@ -195,27 +195,27 @@ export default function UploadPanel({ documents, onDocumentReady }) {
       </div>
 
       <div>
-        <h2 className="mb-2 text-sm font-semibold text-gray-700">Documentos</h2>
+        <h2 className="mb-2 text-sm font-semibold text-foreground">Documentos</h2>
         {documents.length === 0 ? (
-          <p className="text-sm text-gray-400">Todavía no hay documentos subidos.</p>
+          <p className="text-sm text-muted-foreground">Todavía no hay documentos subidos.</p>
         ) : (
           <ul className="space-y-2">
             {documents.map((doc) => (
               <li
                 key={doc.id}
-                className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm"
+                className="rounded-lg border border-border bg-surface-elevated/50 px-3 py-2 text-sm"
               >
                 <div className="flex items-start justify-between gap-2">
-                  <span className="min-w-0 truncate font-medium text-gray-800">
+                  <span className="min-w-0 truncate font-medium text-foreground">
                     {doc.original_filename}
                   </span>
                   <span
-                    className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ${STATUS_STYLES[doc.status] ?? 'bg-gray-100 text-gray-700'}`}
+                    className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ${STATUS_STYLES[doc.status] ?? 'bg-surface-elevated text-muted-foreground ring-border-subtle'}`}
                   >
                     {STATUS_LABELS[doc.status] ?? doc.status}
                   </span>
                 </div>
-                <div className="mt-1 flex items-center justify-between text-xs text-gray-400">
+                <div className="mt-1 flex items-center justify-between text-xs text-muted-foreground">
                   <span>{formatDate(doc.created_at)}</span>
                   {doc.status === 'completed' && doc.chunk_count != null && (
                     <span>{doc.chunk_count} chunks</span>
