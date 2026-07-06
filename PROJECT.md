@@ -20,20 +20,20 @@ El usuario sube documentos (PDFs de papers de ML/AI, documentación técnica) y 
 ### ¿Para qué sirve?
 
 - Subir papers de arXiv o documentación técnica y consultarlos en lenguaje natural
-- Demostrar un stack de AI Engineering completo en producción
-- Base escalable hacia un SaaS multi-tenant en el futuro
+- Demostrar un stack de AI Engineering completo en un entorno local reproducible
+- Documentar decisiones de diseño, mejoras del pipeline y métricas de calidad medibles
 
 ### ¿Quién puede usarlo?
 
-**Versión actual:** uso propio únicamente. La autenticación está diseñada desde el inicio como multi-usuario (tabla `api_keys` en DB), pero hoy solo existe un usuario: vos. Escalar a múltiples usuarios es agregar registro, no reescribir la arquitectura.
+**Versión actual:** proyecto de demo/portfolio. Cualquiera clona el repo, configura sus API keys en `.env` y lo prueba localmente. La autenticación usa API keys creadas con un script CLI (`create_user.py`); no hay registro web ni multi-tenant en producción.
 
 ### ¿Qué demuestra como portfolio?
 
-- Diseño de arquitectura event-driven con workflows durables (Inngest)
-- Pipeline RAG con técnicas avanzadas de industria (HyDE, Hybrid Search, Reranking)
-- API REST production-grade con autenticación, rate limiting y aislamiento multi-tenant
-- Observabilidad real con trazas, costos y métricas de calidad (LangFuse + RAGAS)
-- CI/CD con deploy automático en producción (Railway + Vercel + GitHub Actions)
+- Pipeline RAG con técnicas avanzadas (HyDE, Hybrid Search, Reranking)
+- API REST con autenticación por API key, rate limiting y aislamiento de datos por usuario
+- Ingestión async de PDFs con estado persistido en DB
+- Observabilidad real con trazas, costos y feedback (LangFuse + RAGAS)
+- CI con lint y tests en GitHub Actions
 
 ---
 
@@ -66,14 +66,14 @@ rag-platform/
 │   │   │   ├── database.py         # SQLAlchemy engine — SQLite dev / PostgreSQL prod
 │   │   │   ├── models.py           # User, ApiKey, Document, UsageLog
 │   │   │   ├── repositories.py     # Queries a DB, nunca SQL crudo en rutas
-│   │   │   └── migrations/         # Alembic — versionado de esquema
+│   │   │   └── database.py         # Engine SQLite/Postgres + sesiones
 │   │   │
 │   │   ├── ingestion/              # Flujo async de documentos
 │   │   │   ├── validator.py        # Magic bytes PDF, tamaño máx, content-type
 │   │   │   ├── parser.py           # Extrae texto limpio con pymupdf
 │   │   │   ├── chunker.py          # Chunking semántico por coherencia
 │   │   │   ├── embedder.py         # OpenAI text-embedding-3-small
-│   │   │   └── inngest_functions.py # Workflow: validate→parse→chunk→embed→store
+│   │   │   └── ingestion_worker.py # Background: validate→parse→chunk→embed→store
 │   │   │
 │   │   ├── rag/                    # Pipeline de consulta
 │   │   │   ├── query_transformer.py # Reescribe query para mejor retrieval
@@ -87,7 +87,7 @@ rag-platform/
 │   │   │   ├── documents.py        # UploadResponse, DocumentList
 │   │   │   └── query.py            # QueryRequest, QueryResponse, Source
 │   │   │
-│   │   └── main.py                 # FastAPI init, routers, Inngest serve, lifespan
+│   │   └── main.py                 # FastAPI init, routers, exception handlers
 │   │
 │   ├── tests/
 │   │   ├── conftest.py             # Fixtures: test client, DB en memoria, user de prueba
@@ -98,8 +98,8 @@ rag-platform/
 │   │   └── eval_ragas.py           # Métricas de calidad RAG sobre dataset real
 │   │
 │   ├── Dockerfile
-│   ├── requirements.txt
-│   └── alembic.ini
+│   ├── create_user.py              # Script CLI: crea tablas + usuario + API key
+│   └── pyproject.toml
 │
 ├── frontend/                       # React · Vite
 │   └── src/
@@ -117,8 +117,7 @@ rag-platform/
 │   └── workflows/
 │       └── ci.yml                  # Lint → test → deploy on push to main
 │
-├── docker-compose.yml              # Dev local: FastAPI + Qdrant + PostgreSQL + Inngest
-├── railway.toml                    # Config de deploy en producción
+├── docker-compose.yml              # Dev local: FastAPI + Qdrant + PostgreSQL
 ├── .env.example                    # Nombres de variables, nunca valores reales
 ├── .gitignore                      # .env, __pycache__, node_modules, *.db
 └── README.md                       # Arquitectura, demo link, métricas RAGAS
@@ -147,8 +146,8 @@ La seguridad se construye antes que cualquier lógica de negocio. Si lo hacés a
 - [ ] `db/models.py`: tablas `User`, `ApiKey` (hash, no plaintext), `UsageLog`
 - [ ] `auth/hashing.py` + `auth/api_key.py`: generación y validación de keys hasheadas
 - [ ] `api/deps.py`: dependency `get_current_user` — protege todos los endpoints desde el inicio
-- [ ] `middleware.py`: CORS solo para localhost en dev, rate limiting base con slowapi
-- [ ] Alembic configurado, primera migración corriendo
+- [ ] `middleware.py`: CORS para frontend local, rate limiting base con slowapi
+- [ ] `create_user.py`: crea esquema con SQLAlchemy (`create_all`) + primera API key
 - [ ] `GET /health` sin auth funcionando
 - [ ] Tests de auth: key válida → 200, inválida → 401, sin header → 401
 - [ ] GitHub Actions: ruff + pytest en cada push
@@ -163,9 +162,9 @@ La seguridad se construye antes que cualquier lógica de negocio. Si lo hacés a
 - [ ] `parser.py`: texto limpio desde PDF con pymupdf
 - [ ] `chunker.py`: chunking semántico por coherencia, no por tokens fijos
 - [ ] `embedder.py`: `text-embedding-3-small` de OpenAI con manejo de rate limits
-- [ ] `inngest_functions.py`: workflow con 5 steps, retry automático por step
+- [ ] `ingestion_worker.py`: orquestador del pipeline en background (`asyncio.create_task`)
 - [ ] Colección en Qdrant nombrada `user_{id}` — nunca el cliente elige la colección
-- [ ] `POST /documents/upload` — dispara Inngest, responde 202, registra en UsageLog
+- [ ] `POST /documents/upload` — responde 202, procesa en background, registra en UsageLog
 - [ ] Tests: PDF válido, inválido, oversized, aislamiento entre usuarios
 
 ---
@@ -200,25 +199,24 @@ La seguridad se construye antes que cualquier lógica de negocio. Si lo hacés a
 
 ### Fase 5 — Frontend *(semana 5)*
 
-**Output:** UI funcional conectada al backend, pensada para el video demo.
+**Output:** UI funcional conectada al backend, pensada para demo y video.
 
-- [ ] API key del frontend en `VITE_API_KEY` — nunca en el código fuente
-- [ ] `UploadPanel`: drag & drop, estado del workflow Inngest (procesando / listo / error)
-- [ ] `ChatPanel`: input de query, respuesta con fragmentos de fuente coloreados y expandibles
-- [ ] `FeedbackButtons`: thumbs up/down visible por cada respuesta
-- [ ] Flujo completo filmable: subir PDF → esperar procesamiento → preguntar → ver respuesta con citas
+- [x] API key del frontend en `VITE_API_KEY` — nunca en el código fuente
+- [x] `UploadPanel`: drag & drop, estado de procesamiento (subiendo / procesando / listo / error)
+- [x] `ChatPanel`: input de query, respuesta con fragmentos de fuente coloreados y expandibles
+- [x] `FeedbackButtons`: thumbs up/down visible por cada respuesta
+- [x] Flujo completo: subir PDF → esperar procesamiento → preguntar → ver respuesta con citas
 
 ---
 
-### Fase 6 — Deploy + video demo *(semana 6)*
+### Fase 6 — Deploy + video demo *(semana 6, opcional)*
 
 **Output:** app en producción con URL real, video demostrando el stack completo.
 
-- [ ] Backend en Railway: env vars en el panel, nunca en el repo
-- [ ] CORS actualizado a dominio de Vercel solamente — cerrar localhost en prod
-- [ ] Frontend en Vercel: `VITE_API_URL` apuntando al backend de Railway
-- [ ] GitHub Actions: deploy automático a Railway en push a `main`
-- [ ] README final: arquitectura, métricas RAGAS, link al demo, instrucciones para correrlo local
+- [ ] Backend en hosting (Railway, Fly.io, etc.): env vars en el panel, nunca en el repo
+- [ ] CORS actualizado a dominio del frontend — cerrar localhost en prod
+- [ ] Frontend en Vercel/Netlify: `VITE_API_URL` apuntando al backend
+- [ ] README final con link al demo en vivo
 - [ ] Video demo: upload → ingestión → query → citas → LangFuse dashboard con trazas
 
 ---
@@ -277,45 +275,29 @@ class User(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 ```
 
-En desarrollo se usa **SQLite** (un archivo `.db`, sin servidor). En producción se swapea por **PostgreSQL** cambiando solo una variable de entorno — el código no cambia.
+En desarrollo se usa **SQLite** (un archivo `.db`, sin servidor). El esquema se crea con `Base.metadata.create_all()` al ejecutar `create_user.py`.
 
 ---
 
-### Alembic
+### Ingestión en background (asyncio)
 
-Sistema de migraciones para SQLAlchemy. Resuelve el problema de cómo evolucionar el esquema de la base de datos en producción sin borrar datos.
-
-Cada vez que modificás un modelo, generás una migración:
-
-```bash
-# Detecta cambios en models.py y genera el script automáticamente
-alembic revision --autogenerate -m "add is_active to users"
-
-# Aplica todos los cambios pendientes
-alembic upgrade head
-```
-
-Cada migración tiene `upgrade()` para aplicar y `downgrade()` para revertir. Alembic lleva un registro de qué migraciones ya se ejecutaron.
-
----
-
-### Inngest
-
-Motor de workflows durables. Resuelve el problema de procesar tareas pesadas en background sin perder trabajo si algo falla.
-
-Cuando el usuario sube un PDF, FastAPI no procesa nada — dispara un **evento** a Inngest y responde `202 Accepted` de inmediato. Inngest ejecuta el workflow en background con reintentos automáticos por cada step:
+Para esta demo, la ingestión de PDFs no bloquea el endpoint de upload. Cuando llega un PDF, FastAPI valida el archivo, lo guarda en disco, crea un registro `Document` en estado `pending` y responde `202 Accepted` de inmediato. Luego dispara `process_document_event` con `asyncio.create_task` en el mismo proceso:
 
 ```
-POST /upload → evento disparado → 202 inmediato
+POST /upload → guarda PDF + Document(pending) → 202 inmediato
                     ↓
-         Inngest ejecuta en background:
-         step 1: validar PDF         ← si falla, reintenta solo
-         step 2: parsear texto       ← si falla, reintenta desde acá
-         step 3: generar embeddings  ← si falla, reintenta desde acá
-         step 4: guardar en Qdrant
+         Background task en el mismo worker:
+         1. validar PDF
+         2. parsear texto
+         3. generar chunks
+         4. generar embeddings (OpenAI)
+         5. guardar en Qdrant (colección user_{id})
+         6. actualizar estado → completed / failed
 ```
 
-Sin Inngest, si la llamada a OpenAI falla a mitad del procesamiento, se pierde todo y el usuario no sabe qué pasó.
+**Trade-off consciente:** si el proceso FastAPI se reinicia a mitad del procesamiento, el job se pierde. Para una demo local esto es aceptable. En producción con alta carga se usaría una cola durable (Redis, SQS, Celery, etc.).
+
+El código vive en `backend/app/ingestion/ingestion_worker.py`.
 
 ---
 
@@ -436,32 +418,21 @@ Sistema de CI/CD integrado en GitHub. Define workflows que se ejecutan automáti
 El workflow del proyecto:
 
 ```yaml
-on: push to main
+on: push to main / pull_request
 jobs:
   ci:
     steps:
       - ruff check .          # lint
       - pytest                # tests
-      - deploy to Railway     # solo si todo pasó
 ```
 
-Si ruff o pytest fallan, Railway no recibe el deploy. Esto garantiza que `main` siempre está en estado deployable.
+Si ruff o pytest fallan, el PR no debería mergearse. No hay deploy automático configurado.
 
 ---
 
-### Railway
+### Railway / Vercel *(opcional, no configurado)*
 
-Plataforma de deploy para aplicaciones backend. Conecta con el repo de GitHub, detecta el `Dockerfile`, y deploya automáticamente. Incluye dominio gratis, PostgreSQL managed, y variables de entorno seguras.
-
-Las API keys y secrets se cargan en el panel de Railway — nunca en el código ni en el repo.
-
----
-
-### Vercel
-
-Plataforma de deploy para frontends estáticos (React, Next.js, etc.). Free tier permanente, dominio gratis, deploy automático desde GitHub.
-
-El frontend lee la URL del backend desde `VITE_API_URL` — variable de entorno configurada en el panel de Vercel, no hardcodeada.
+Opciones habituales para deploy futuro: Railway o Fly.io para el backend, Vercel o Netlify para el frontend React. Las API keys y secrets se cargan en el panel del hosting — nunca en el código ni en el repo.
 
 ---
 
@@ -504,8 +475,8 @@ Docker empaqueta la aplicación y todas sus dependencias en un contenedor — un
 docker-compose define múltiples contenedores que trabajan juntos. En desarrollo local levanta con un solo comando:
 
 ```bash
-docker-compose up
-# Levanta: FastAPI + PostgreSQL + Qdrant + Inngest dev server
+docker compose up --build
+# Levanta: FastAPI + PostgreSQL + Qdrant
 ```
 
 ---
@@ -551,4 +522,4 @@ Garantía de que un usuario nunca puede ver ni consultar datos de otro usuario. 
 
 ---
 
-*Documento generado como referencia para el desarrollo en Cursor. Actualizar métricas RAGAS y link al demo una vez deployado.*
+*Documento de referencia para el desarrollo. Ver README.md para setup y métricas RAGAS actualizadas.*

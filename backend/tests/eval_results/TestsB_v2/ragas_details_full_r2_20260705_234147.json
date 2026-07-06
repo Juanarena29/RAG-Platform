@@ -1,0 +1,592 @@
+{
+  "generated_at": "2026-07-05T23:48:04.648304+00:00",
+  "experiment_id": "full_r2",
+  "use_query_transform": true,
+  "use_hyde": true,
+  "max_sources": 5,
+  "sample_size": 25,
+  "metrics": {
+    "faithfulness": 0.8579523809523809,
+    "answer_relevancy": 0.9169185520009979,
+    "context_precision": 0.9779999999473,
+    "context_recall": 1.0
+  },
+  "faithfulness_threshold": 0.7,
+  "low_faithfulness_count": 5,
+  "usage": {
+    "pipeline": {
+      "prompt_tokens": 51109,
+      "completion_tokens": 5248,
+      "embedding_tokens": 2428,
+      "total_tokens": 58785,
+      "estimated_cost_usd": 0.010865
+    },
+    "ragas_judge": {
+      "prompt_tokens": 177272,
+      "completion_tokens": 28909,
+      "embedding_tokens": 0,
+      "total_tokens": 206181,
+      "estimated_cost_usd": 0.037831
+    },
+    "total_estimated_cost_usd": 0.048696,
+    "latency_ms": {
+      "count": 25,
+      "total": 250430.12,
+      "mean": 10017.2,
+      "p50": 9755.98,
+      "p95": 12583.84
+    }
+  },
+  "records": [
+    {
+      "index": 1,
+      "question": "What is the attention mechanism in transformers?",
+      "answer": "The attention mechanism in transformers is described as mapping a query and a set of key-value pairs to an output, where the output is computed as a weighted sum of the values based on the attention scores derived from the queries and keys. The Transformer employs multi-head attention, which allows the model to jointly attend to information from different representation subspaces at different positions. This is implemented in various ways, including self-attention layers in the encoder and encoder-decoder attention layers in the decoder.",
+      "ground_truth": "Attention allows each token to weigh information from all other tokens, enabling the model to capture relationships regardless of their distance in the sequence.",
+      "trace_id": "46c3b3bb-3e74-4342-a279-6fe384efa46a",
+      "latency_ms": 12542.22,
+      "usage": {
+        "prompt_tokens": 2263,
+        "completion_tokens": 222,
+        "embedding_tokens": 94,
+        "total_tokens": 2579,
+        "estimated_cost_usd": 0.000475
+      },
+      "context_count": 3,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9784574390977991,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 2,
+      "question": "How does multi-head attention work?",
+      "answer": "Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions. It consists of several attention layers running in parallel, where each attention head computes the attention function on projected versions of the queries, keys, and values. The outputs of these heads are concatenated and projected to produce the final output values. The formula for multi-head attention is given as MultiHead(Q, K, V) = Concat(head1, ..., headh)W O, where each head is computed as headi = Attention(QWiQ, KW iK, V W iV). In this work, 8 parallel attention layers are used, with each head having reduced dimensions to maintain computational efficiency.",
+      "ground_truth": "Multi-head attention performs several attention operations in parallel using different learned projections, then concatenates their outputs to capture different types of relationships.",
+      "trace_id": "6d7be829-e4d4-49fa-a87f-1adc990b2f06",
+      "latency_ms": 12583.84,
+      "usage": {
+        "prompt_tokens": 2019,
+        "completion_tokens": 276,
+        "embedding_tokens": 102,
+        "total_tokens": 2397,
+        "estimated_cost_usd": 0.00047
+      },
+      "context_count": 3,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.960583257113022,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 3,
+      "question": "What problem does self-attention solve compared to recurrent networks?",
+      "answer": "Self-attention solves the problem of learning long-range dependencies more effectively than recurrent networks by connecting all positions with a constant number of sequentially executed operations, whereas recurrent layers require O(n) sequential operations. This allows for greater parallelization and reduces the computational complexity per layer, making it easier to learn dependencies between distant positions in the input and output sequences.",
+      "ground_truth": "Self-attention reduces sequential computation by allowing every position to attend directly to every other position with a constant number of sequential operations, making it easier to model long-range dependencies than recurrent networks.",
+      "trace_id": "00a3530a-e78a-410b-863c-7d48192d0972",
+      "latency_ms": 16310.72,
+      "usage": {
+        "prompt_tokens": 2191,
+        "completion_tokens": 199,
+        "embedding_tokens": 99,
+        "total_tokens": 2489,
+        "estimated_cost_usd": 0.00045
+      },
+      "context_count": 2,
+      "scores": {
+        "faithfulness": 0.42857142857142855,
+        "answer_relevancy": 0.76175504248222,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 4,
+      "question": "Why are positional encodings required in transformers?",
+      "answer": "Positional encodings are required in transformers to inject information about the relative or absolute position of the tokens in the sequence, as the model contains no recurrence and no convolution. This allows the model to make use of the order of the sequence.",
+      "ground_truth": "Positional encodings provide information about token order because the attention mechanism itself is permutation invariant.",
+      "trace_id": "d2bac2bd-d485-48c2-a05e-3e1a4a49a8ee",
+      "latency_ms": 9755.98,
+      "usage": {
+        "prompt_tokens": 2321,
+        "completion_tokens": 166,
+        "embedding_tokens": 94,
+        "total_tokens": 2581,
+        "estimated_cost_usd": 0.00045
+      },
+      "context_count": 1,
+      "scores": {
+        "faithfulness": 0.8,
+        "answer_relevancy": 0.9859870333339422,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 5,
+      "question": "What is the purpose of feed-forward networks in transformer blocks?",
+      "answer": "The purpose of feed-forward networks in transformer blocks is to apply a fully connected feed-forward network to each position separately and identically, consisting of two linear transformations with a ReLU activation in between. This allows for additional processing of the representations after the attention mechanism has been applied, enhancing the model's ability to learn complex patterns in the data.",
+      "ground_truth": "Feed-forward networks apply nonlinear transformations independently to each position after attention, increasing the model's representational capacity.",
+      "trace_id": "46f0131a-cae9-488d-a866-3be566d46be0",
+      "latency_ms": 11865.51,
+      "usage": {
+        "prompt_tokens": 2244,
+        "completion_tokens": 193,
+        "embedding_tokens": 98,
+        "total_tokens": 2535,
+        "estimated_cost_usd": 0.000454
+      },
+      "context_count": 2,
+      "scores": {
+        "faithfulness": 0.75,
+        "answer_relevancy": 0.9999995359919347,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 6,
+      "question": "Why is layer normalization important in transformers?",
+      "answer": "Layer normalization is important in transformers because it is applied after the residual connections around each sub-layer, which helps stabilize and improve the training of the model by normalizing the outputs of the sub-layers. This is done to facilitate the residual connections, ensuring that the output of each sub-layer is effectively combined with its input, thus enhancing the learning process.",
+      "ground_truth": "Layer normalization is applied together with residual connections around each sub-layer to stabilize optimization, improve convergence, and enable effective training of deep transformer models.",
+      "trace_id": "a248a542-1f58-47eb-b9bc-816ad8872cbb",
+      "latency_ms": 10351.79,
+      "usage": {
+        "prompt_tokens": 2203,
+        "completion_tokens": 181,
+        "embedding_tokens": 86,
+        "total_tokens": 2470,
+        "estimated_cost_usd": 0.000441
+      },
+      "context_count": 1,
+      "scores": {
+        "faithfulness": 0.5714285714285714,
+        "answer_relevancy": 1.0000000000000002,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 7,
+      "question": "What is scaled dot-product attention?",
+      "answer": "Scaled Dot-Product Attention is an attention mechanism where the input consists of queries and keys of dimension dk, and values of dimension dv. It computes the dot products of the query with all keys, divides each by √dk, and applies a softmax function to obtain the weights on the values. The attention function is computed on a set of queries simultaneously, packed into a matrix Q, with keys and values also packed into matrices K and V. The output is calculated as Attention(Q, K, V) = softmax(QKT) V / √dk.",
+      "ground_truth": "Scaled dot-product attention computes softmax(QK^T divided by the square root of the key dimension) multiplied by V to obtain weighted value representations.",
+      "trace_id": "21e94073-9bc7-45f3-9566-d450618083d5",
+      "latency_ms": 12411.49,
+      "usage": {
+        "prompt_tokens": 1995,
+        "completion_tokens": 259,
+        "embedding_tokens": 118,
+        "total_tokens": 2372,
+        "estimated_cost_usd": 0.000457
+      },
+      "context_count": 1,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9393665670303775,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 8,
+      "question": "Why are transformers more parallelizable than recurrent neural networks?",
+      "answer": "Transformers are more parallelizable than recurrent neural networks because they rely entirely on attention mechanisms, which allow for significantly more parallelization. In contrast, recurrent models have an inherently sequential nature that precludes parallelization within training examples, as they generate a sequence of hidden states based on previous states, limiting their ability to process longer sequences efficiently [1][2].",
+      "ground_truth": "Transformers process all sequence positions simultaneously instead of sequentially, allowing efficient parallel computation during training.",
+      "trace_id": "dbea4ff4-e951-4f64-b2c8-796f85d2218e",
+      "latency_ms": 10537.92,
+      "usage": {
+        "prompt_tokens": 2220,
+        "completion_tokens": 203,
+        "embedding_tokens": 98,
+        "total_tokens": 2521,
+        "estimated_cost_usd": 0.000457
+      },
+      "context_count": 2,
+      "scores": {
+        "faithfulness": 0.8571428571428571,
+        "answer_relevancy": 0.9897065568888339,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 9,
+      "question": "What is retrieval-augmented generation?",
+      "answer": "Retrieval-augmented generation (RAG) is a method that combines pre-trained parametric memory, such as a sequence-to-sequence (seq2seq) model, with non-parametric memory, like a dense vector index of Wikipedia, accessed through a neural retriever. This approach allows for the generation of language by conditioning on retrieved documents, which can be used to enhance the performance on knowledge-intensive NLP tasks. RAG models can be fine-tuned end-to-end, enabling them to leverage both types of memory effectively.",
+      "ground_truth": "Retrieval-augmented generation combines document retrieval with text generation, conditioning the model on retrieved evidence to improve factual accuracy.",
+      "trace_id": "c13f2228-9b1b-49d1-8e6b-3c29b4efd05a",
+      "latency_ms": 9906.59,
+      "usage": {
+        "prompt_tokens": 1889,
+        "completion_tokens": 251,
+        "embedding_tokens": 112,
+        "total_tokens": 2252,
+        "estimated_cost_usd": 0.000436
+      },
+      "context_count": 2,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8316891162011694,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 10,
+      "question": "How does RAG improve factual knowledge?",
+      "answer": "RAG improves factual knowledge by being more strongly grounded in real factual knowledge sources like Wikipedia, which reduces the likelihood of generating hallucinated content and increases the factual accuracy of its outputs [1]. Additionally, RAG's retrieval mechanism allows it to learn to retrieve relevant information for tasks, which enhances its performance across various applications, particularly in Open-Domain QA [2].",
+      "ground_truth": "RAG retrieves relevant external documents at inference time so generation is grounded in retrieved evidence instead of relying only on model parameters.",
+      "trace_id": "cb896653-ce33-4943-9c95-120eab9f5cf3",
+      "latency_ms": 7977.69,
+      "usage": {
+        "prompt_tokens": 1934,
+        "completion_tokens": 213,
+        "embedding_tokens": 112,
+        "total_tokens": 2259,
+        "estimated_cost_usd": 0.00042
+      },
+      "context_count": 2,
+      "scores": {
+        "faithfulness": 0.8333333333333334,
+        "answer_relevancy": 0.9422881437487418,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 11,
+      "question": "How are retrieved documents used in RAG?",
+      "answer": "Retrieved documents in RAG are used to generate answers by treating them as latent variables. The RAG-Sequence model uses the same retrieved document to generate the complete sequence, while the RAG-Token model can draw a different document for each target token, allowing for content selection from multiple documents. The retrieved documents are used to produce a distribution over generated text, which is then marginalized to generate the final output.",
+      "ground_truth": "Retrieved documents are provided as additional context to the generator, allowing it to produce answers conditioned on external knowledge.",
+      "trace_id": "b431e7a9-4d01-4296-ba76-2886ed2e232a",
+      "latency_ms": 8198.48,
+      "usage": {
+        "prompt_tokens": 2046,
+        "completion_tokens": 202,
+        "embedding_tokens": 90,
+        "total_tokens": 2338,
+        "estimated_cost_usd": 0.00043
+      },
+      "context_count": 2,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8331893736766967,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 12,
+      "question": "What is top-k retrieval in RAG?",
+      "answer": "Top-k retrieval in RAG refers to the process of retrieving the top K documents for each query during training and testing. This is done using a document encoder to compute embeddings for each document and building a MIPS index for fast retrieval. The retrieved documents are then used to generate answers based on the input query.",
+      "ground_truth": "Top-k retrieval selects the highest-ranked documents for a query and supplies them to the generation model as supporting context.",
+      "trace_id": "2aea9777-6fe9-4b7c-928a-1c30581a5f98",
+      "latency_ms": 8261.49,
+      "usage": {
+        "prompt_tokens": 2308,
+        "completion_tokens": 204,
+        "embedding_tokens": 107,
+        "total_tokens": 2619,
+        "estimated_cost_usd": 0.000471
+      },
+      "context_count": 3,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9731849696694529,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 13,
+      "question": "What is HyDE in information retrieval?",
+      "answer": "HyDE is an unsupervised model used in information retrieval that significantly outperforms previous state-of-the-art models like Contriever in various tasks. It utilizes a generative model and a contrastive encoder without training a specific model, relying instead on instruction learning from a backbone LLM. HyDE is designed to handle zero-shot dense retrieval by mapping queries to hypothetical documents and performing search in a document embedding space that captures document similarity.",
+      "ground_truth": "HyDE improves retrieval by first generating a hypothetical document and then embedding that document rather than the original query. This decomposes dense retrieval into a generation step followed by document-document similarity, producing embeddings that better match relevant passages.",
+      "trace_id": "a456647a-a590-4567-9a9a-786013c5ab49",
+      "latency_ms": 9568.12,
+      "usage": {
+        "prompt_tokens": 1613,
+        "completion_tokens": 230,
+        "embedding_tokens": 101,
+        "total_tokens": 1944,
+        "estimated_cost_usd": 0.000382
+      },
+      "context_count": 5,
+      "scores": {
+        "faithfulness": 0.875,
+        "answer_relevancy": 0.8502757579100025,
+        "context_precision": 0.4499999999775,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 14,
+      "question": "Why can HyDE improve zero-shot retrieval?",
+      "answer": "HyDE can improve zero-shot retrieval by generating hypothetical documents using a language model, which allows it to perform search in an embedding space that captures document similarity. This approach circumvents the learning problem associated with zero-shot retrieval, as it does not require relevance labels and instead relies on unsupervised contrastive learning to encode documents into embedding vectors. The retrieval process leverages document-document similarity encoded during contrastive training, making it effective even without explicit modeling of query-document similarity scores.",
+      "ground_truth": "HyDE transforms the query into an answer-like document whose embedding better matches relevant passages, improving retrieval without relevance labels.",
+      "trace_id": "af4d36a0-4655-4eb3-9d5f-a6224a65f91f",
+      "latency_ms": 8659.06,
+      "usage": {
+        "prompt_tokens": 1815,
+        "completion_tokens": 222,
+        "embedding_tokens": 94,
+        "total_tokens": 2131,
+        "estimated_cost_usd": 0.000407
+      },
+      "context_count": 3,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9710803216801774,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 15,
+      "question": "What is the main advantage of HyDE over directly embedding the query?",
+      "answer": "The main advantage of HyDE over directly embedding the query is that it decomposes dense retrieval into two tasks: a generative task performed by an instruction-following language model and a document-document similarity task performed by a contrastive encoder. This allows HyDE to circumvent the learning problem associated with directly embedding the query, as it does not explicitly model or compute the query-document similarity score, but instead leverages the generative process to capture relevance through hypothetical documents.",
+      "ground_truth": "HyDE creates a richer semantic representation of the user's intent by embedding a generated hypothetical document instead of the short query itself.",
+      "trace_id": "1cc9e68a-e367-40ab-bb23-dfd8fc924b8a",
+      "latency_ms": 9277.34,
+      "usage": {
+        "prompt_tokens": 1938,
+        "completion_tokens": 218,
+        "embedding_tokens": 88,
+        "total_tokens": 2244,
+        "estimated_cost_usd": 0.000423
+      },
+      "context_count": 2,
+      "scores": {
+        "faithfulness": 0.6666666666666666,
+        "answer_relevancy": 1.0,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 16,
+      "question": "What challenge does the 'Lost in the Middle' paper identify?",
+      "answer": "The 'Lost in the Middle' paper identifies the challenge that language models perform poorly when they need to access and use information located in the middle of long input contexts, resulting in a U-shaped performance curve where models are better at using information at the beginning or end of the context.",
+      "ground_truth": "The paper shows that long-context language models often fail to use relevant information effectively when it appears in the middle of the provided context, performing better when the information is located near the beginning or end.",
+      "trace_id": "e4601297-d2e4-46bc-b659-62e64c130cc0",
+      "latency_ms": 8384.6,
+      "usage": {
+        "prompt_tokens": 1919,
+        "completion_tokens": 180,
+        "embedding_tokens": 94,
+        "total_tokens": 2193,
+        "estimated_cost_usd": 0.000398
+      },
+      "context_count": 2,
+      "scores": {
+        "faithfulness": 0.75,
+        "answer_relevancy": 0.5730519697748724,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 17,
+      "question": "How does document position affect long-context language models?",
+      "answer": "Document position affects long-context language models by causing performance degradation when relevant information is located in the middle of the input context. Models perform better when relevant information is at the beginning or end of the context, exhibiting a U-shaped performance curve. This indicates that current language models do not robustly utilize information in long contexts.",
+      "ground_truth": "Language models tend to perform better when relevant information appears near the beginning or end of the context than when it is located in the middle.",
+      "trace_id": "804fdc79-941e-4a42-8a20-8ca6a9c8e4de",
+      "latency_ms": 7500.15,
+      "usage": {
+        "prompt_tokens": 2002,
+        "completion_tokens": 198,
+        "embedding_tokens": 101,
+        "total_tokens": 2301,
+        "estimated_cost_usd": 0.000421
+      },
+      "context_count": 3,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 1.0,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 18,
+      "question": "Why are long context windows not always sufficient for question answering?",
+      "answer": "Long context windows are not always sufficient for question answering because providing more information can lead to a decrease in accuracy as the model must reason over more content. Additionally, models often perform better when relevant information is located at the beginning or end of the input context, and performance significantly degrades when the information is in the middle. This indicates that current models do not robustly utilize information in long input contexts.",
+      "ground_truth": "Simply increasing context length does not guarantee effective use of all information because models may fail to attend to relevant content in the middle.",
+      "trace_id": "9b5959da-ca97-4700-8ef6-2ba8879e2913",
+      "latency_ms": 7835.45,
+      "usage": {
+        "prompt_tokens": 1981,
+        "completion_tokens": 203,
+        "embedding_tokens": 90,
+        "total_tokens": 2274,
+        "estimated_cost_usd": 0.000421
+      },
+      "context_count": 4,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 1.0,
+        "context_precision": 0.999999999975,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 19,
+      "question": "What is the main contribution of the Transformer architecture?",
+      "answer": "The main contribution of the Transformer architecture is that it is based solely on attention mechanisms, dispensing with recurrence and convolutions entirely, which allows for faster training and improved performance on tasks such as machine translation. It achieves superior quality while being more parallelizable and requiring significantly less time to train compared to traditional models.",
+      "ground_truth": "The Transformer replaces recurrence with attention mechanisms, enabling highly parallel sequence modeling while achieving strong performance on language tasks.",
+      "trace_id": "3382e3cd-b119-4b2b-b7f4-81fc5788b3dc",
+      "latency_ms": 7770.85,
+      "usage": {
+        "prompt_tokens": 2105,
+        "completion_tokens": 176,
+        "embedding_tokens": 84,
+        "total_tokens": 2365,
+        "estimated_cost_usd": 0.000423
+      },
+      "context_count": 2,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 1.0000000000000002,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 20,
+      "question": "How does attention enable modeling long-range dependencies?",
+      "answer": "Attention enables modeling long-range dependencies by allowing connections between all positions in the input and output sequences with a constant number of sequentially executed operations. This reduces the path length that signals must traverse, making it easier to learn long-range dependencies compared to recurrent layers, which require a linear number of sequential operations. Thus, self-attention facilitates the learning of dependencies without regard to their distance in the sequences.",
+      "ground_truth": "Attention directly connects every token with every other token, allowing dependencies to be modeled regardless of sequence distance.",
+      "trace_id": "89a37eeb-e41d-44a4-9a9b-960a5e3bebf0",
+      "latency_ms": 7427.04,
+      "usage": {
+        "prompt_tokens": 2143,
+        "completion_tokens": 199,
+        "embedding_tokens": 87,
+        "total_tokens": 2429,
+        "estimated_cost_usd": 0.000443
+      },
+      "context_count": 2,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9175078294686069,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 21,
+      "question": "Why is retrieval useful even for very large language models?",
+      "answer": "Retrieval is useful for very large language models because it allows them to access and manipulate knowledge more effectively, especially on knowledge-intensive tasks where their performance may lag behind task-specific architectures. By combining pre-trained parametric models with non-parametric memory, such as a dense vector index of Wikipedia, retrieval-augmented generation (RAG) models can outperform traditional parametric models on various tasks, including open domain question answering. This approach enhances the model's ability to provide accurate information and adapt to new knowledge, addressing limitations in their ability to update world knowledge and provide provenance for decisions [1].",
+      "ground_truth": "Retrieval provides access to external knowledge at inference time, improving factual accuracy without requiring all knowledge to be stored in model parameters.",
+      "trace_id": "e06464cf-2957-41b7-9d15-04c29061813b",
+      "latency_ms": 9631.94,
+      "usage": {
+        "prompt_tokens": 2238,
+        "completion_tokens": 241,
+        "embedding_tokens": 95,
+        "total_tokens": 2574,
+        "estimated_cost_usd": 0.000482
+      },
+      "context_count": 1,
+      "scores": {
+        "faithfulness": 0.5,
+        "answer_relevancy": 0.9881569827797106,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 22,
+      "question": "How do transformers enable retrieval-augmented generation systems?",
+      "answer": "Transformers enable retrieval-augmented generation systems by combining pre-trained parametric memory (a seq2seq transformer) with non-parametric memory (a dense vector index of Wikipedia) accessed through a neural retriever. This setup allows the model to condition on retrieved documents to generate outputs, effectively integrating both types of memory in a probabilistic model that can be fine-tuned end-to-end for various NLP tasks.",
+      "ground_truth": "Transformer architectures can condition generation on retrieved documents using attention, allowing external evidence to influence generated responses.",
+      "trace_id": "47ae52e6-5cc1-4900-bc05-bd200f41ebff",
+      "latency_ms": 11435.57,
+      "usage": {
+        "prompt_tokens": 1962,
+        "completion_tokens": 204,
+        "embedding_tokens": 91,
+        "total_tokens": 2257,
+        "estimated_cost_usd": 0.000419
+      },
+      "context_count": 3,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9778987704602788,
+        "context_precision": 0.9999999999666667,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 23,
+      "question": "What limitation of parametric knowledge motivates retrieval?",
+      "answer": "The limitation of parametric knowledge that motivates retrieval is that pre-trained language models cannot easily expand or revise their memory, cannot straightforwardly provide insight into their predictions, and may produce 'hallucinations' [3].",
+      "ground_truth": "Knowledge stored only in model parameters can become outdated or incomplete, whereas retrieval provides access to current external information.",
+      "trace_id": "d6ba9f21-c06b-4112-9f90-c772e945b73a",
+      "latency_ms": 10496.85,
+      "usage": {
+        "prompt_tokens": 2027,
+        "completion_tokens": 161,
+        "embedding_tokens": 90,
+        "total_tokens": 2278,
+        "estimated_cost_usd": 0.000402
+      },
+      "context_count": 1,
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.6271227709256952,
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 24,
+      "question": "Why can retrieval reduce hallucinations?",
+      "answer": "Retrieval can reduce hallucinations because hybrid models that combine parametric memory with non-parametric (retrieval-based) memories allow for direct revision and expansion of knowledge, and the accessed knowledge can be inspected and interpreted, which helps in providing more accurate and factual outputs compared to purely parametric models that may produce hallucinations.",
+      "ground_truth": "Retrieval reduces hallucinations by grounding generation on relevant external documents instead of relying only on knowledge stored in model parameters, allowing responses to be supported by retrieved evidence.",
+      "trace_id": "1ad6be4f-cb69-425f-af5b-cc3bcc8a0316",
+      "latency_ms": 11121.52,
+      "usage": {
+        "prompt_tokens": 1657,
+        "completion_tokens": 190,
+        "embedding_tokens": 98,
+        "total_tokens": 1945,
+        "estimated_cost_usd": 0.000365
+      },
+      "context_count": 2,
+      "scores": {
+        "faithfulness": 0.6666666666666666,
+        "answer_relevancy": 0.8454181995657635,
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "index": 25,
+      "question": "How do retrieval and long-context models complement each other?",
+      "answer": "Retrieval and long-context models complement each other by addressing the limitations of each approach. Retrieval models can effectively gather relevant information, but long-context models struggle to utilize this information effectively, particularly when it is positioned in the middle of long contexts. The performance of language models tends to be highest when relevant information is at the beginning or end of the context, indicating that while retrieval can provide more data, the models may not be able to process it efficiently. This suggests a need for effective re-ranking of retrieved documents to improve the use of context in long input scenarios.",
+      "ground_truth": "Retrieval narrows the search space by selecting the most relevant documents, while long-context language models reason over that retrieved evidence. Together they reduce the need to process unnecessarily large contexts while improving access to relevant information.",
+      "trace_id": "68e6b929-7754-4681-af4b-d12fa5cdec5b",
+      "latency_ms": 10617.91,
+      "usage": {
+        "prompt_tokens": 2076,
+        "completion_tokens": 257,
+        "embedding_tokens": 105,
+        "total_tokens": 2438,
+        "estimated_cost_usd": 0.000468
+      },
+      "context_count": 5,
+      "scores": {
+        "faithfulness": 0.75,
+        "answer_relevancy": 0.9762441622256502,
+        "context_precision": 0.99999999998,
+        "context_recall": 1.0
+      }
+    }
+  ]
+}

@@ -9,15 +9,21 @@ description = "Backend API for the RAG platform"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "datasets",
     "fastapi",
-    "inngest",
+    "langchain-community>=0.3.0,<0.4.2",
+    "langchain-openai",
     "langchain-text-splitters",
+    "langfuse",
     "openai",
     "pydantic-settings",
     "pymupdf",
     "psycopg2-binary",
     "python-multipart",
     "qdrant-client",
+    "ragas",
+    "sentence-transformers",
+    "cohere",
     "sqlalchemy",
     "slowapi",
     "structlog",
@@ -27,8 +33,8 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    "alembic",
     "httpx",
+    "python-dotenv",
     "pytest",
     "ruff",
 ]

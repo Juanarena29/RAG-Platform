@@ -37,6 +37,21 @@ def get_document(db: Session, document_id: int, user_id: int) -> Document | None
     )
 
 
+def get_documents_by_ids(
+    db: Session,
+    user_id: int,
+    document_ids: list[int],
+) -> list[Document]:
+    if not document_ids:
+        return []
+
+    return (
+        db.query(Document)
+        .filter(Document.user_id == user_id, Document.id.in_(document_ids))
+        .all()
+    )
+
+
 def get_documents_by_user(db: Session, user_id: int) -> list[Document]:
     return (
         db.query(Document)

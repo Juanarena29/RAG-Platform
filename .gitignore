@@ -17,9 +17,20 @@ venv/
 *.sqlite3
 
 # Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
 node_modules/
 dist/
 
 # OS/editor
 .DS_Store
 Thumbs.db
+
+# Backend build artifacts
+backend/build/
+backend/dist/
+backend/uploads/
+backend/tests/eval_results/*
+!backend/tests/eval_results/TestsB_v1/
+!backend/tests/eval_results/TestsB_v2/

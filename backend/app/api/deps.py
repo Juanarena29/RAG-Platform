@@ -1,3 +1,4 @@
+import structlog
 from fastapi import Depends, HTTPException, status
 from fastapi.security import APIKeyHeader
 from sqlalchemy.orm import Session
@@ -37,4 +38,5 @@ def get_current_user(
     if not user or not user.is_active:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid user")
 
+    structlog.contextvars.bind_contextvars(user_id=user.id)
     return user

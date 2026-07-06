@@ -5,7 +5,9 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from app.api.deps import get_current_user
 from app.api.middleware import limiter, setup_middleware
 from app.api.routes import documents as documents_router
+from app.api.routes import feedback as feedback_router
 from app.api.routes import health as health_router
+from app.api.routes import query as query_router
 from app.core.config import get_settings
 from app.core.exceptions import (
     http_exception_handler,
@@ -27,6 +29,8 @@ app.add_exception_handler(Exception, unhandled_exception_handler)
 
 app.include_router(health_router.router)
 app.include_router(documents_router.router)
+app.include_router(query_router.router)
+app.include_router(feedback_router.router)
 
 
 @app.get("/me")
