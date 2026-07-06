@@ -1,6 +1,0 @@
-{
-    "explorer.autoRevealExclude": {
-        "**/__pycache__": true,
-        "**/*cache": true
-    }
-}
