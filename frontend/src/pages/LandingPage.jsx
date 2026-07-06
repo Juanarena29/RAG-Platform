@@ -13,11 +13,12 @@ export default function LandingPage() {
       <main className="flex flex-1 flex-col items-center justify-center px-6 pb-24">
         <div className="w-full max-w-lg text-center">
           <h1 className="font-heading text-4xl font-semibold leading-tight tracking-tight text-foreground sm:text-5xl">
-            Ask your documents anything
+            Query papers and technical documents
           </h1>
 
           <p className="mx-auto mt-5 max-w-md text-base leading-relaxed text-muted-foreground">
-            Upload PDFs, build a knowledge base, and chat with answers grounded in your sources.
+            Upload research papers, reports, or technical PDFs and ask questions about their
+            content. Answers are grounded in your sources, with citations you can verify.
           </p>
 
           <div className="mt-10">
