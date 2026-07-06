@@ -1,0 +1,38 @@
+{
+  "generated_at": "2026-07-05T22:41:37.976595+00:00",
+  "experiment_id": "baseline_r1",
+  "use_query_transform": false,
+  "use_hyde": false,
+  "max_sources": 5,
+  "sample_size": 25,
+  "metrics": {
+    "faithfulness": 0.8291731601731601,
+    "answer_relevancy": 0.8895422084826602,
+    "context_precision": 0.9599999999491667,
+    "context_recall": 0.96
+  },
+  "usage": {
+    "pipeline": {
+      "prompt_tokens": 43851,
+      "completion_tokens": 2397,
+      "embedding_tokens": 243,
+      "total_tokens": 46491,
+      "estimated_cost_usd": 0.008022
+    },
+    "ragas_judge": {
+      "prompt_tokens": 186183,
+      "completion_tokens": 25439,
+      "embedding_tokens": 0,
+      "total_tokens": 211622,
+      "estimated_cost_usd": 0.043037
+    },
+    "total_estimated_cost_usd": 0.051059,
+    "latency_ms": {
+      "count": 25,
+      "total": 139039.33,
+      "mean": 5561.57,
+      "p50": 5085.4,
+      "p95": 6240.51
+    }
+  }
+}

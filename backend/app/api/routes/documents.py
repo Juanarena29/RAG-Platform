@@ -11,7 +11,7 @@ from app.core.config import get_settings
 from app.db.database import SessionLocal, get_db
 from app.db.models import UsageLog, User
 from app.db.repositories import create_document, get_documents_by_user
-from app.ingestion.inngest_functions import process_document_event
+from app.ingestion.ingestion_worker import process_document_event
 from app.ingestion.validator import DocumentValidationError, validate_pdf
 from app.schemas.documents import DocumentListResponse, DocumentStatus, UploadResponse
 
