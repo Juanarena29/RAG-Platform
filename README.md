@@ -295,5 +295,4 @@ Incluye tests del pipeline RAG, ingestión, LangFuse/feedback y API.
 ## Documentación
 
 - [`PROJECT.md`](PROJECT.md) — decisiones de diseño, glosario (HyDE, hybrid search, reranking)
-- [`EXPERIMENT_HISTORY_INDEX.md`](EXPERIMENT_HISTORY_INDEX.md) — log de experimentos RAGAS (Part A: prompts, Part B: ablation)
-- [`MDS/FASE2.md`](MDS/FASE2.md) — detalle del pipeline de ingestión (si está en el repo)
+- [`EXPERIMENT_HISTORY_INDEX.md`](EXPERIMENT_HISTORY_INDEX.md) — log de experimentos RAGAS (Part A: prompts, Part B: ablation, v1 y v2)
